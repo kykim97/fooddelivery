@@ -1,0 +1,285 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-management
+  labels:
+    app: order-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-management
+  template:
+    metadata:
+      labels:
+        app: order-management
+    spec:
+      containers:
+        - name: order-management
+          image: username/order-management:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: food-preparation
+  labels:
+    app: food-preparation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: food-preparation
+  template:
+    metadata:
+      labels:
+        app: food-preparation
+    spec:
+      containers:
+        - name: food-preparation
+          image: username/food-preparation:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-management
+  labels:
+    app: delivery-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: delivery-management
+  template:
+    metadata:
+      labels:
+        app: delivery-management
+    spec:
+      containers:
+        - name: delivery-management
+          image: username/delivery-management:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rating-management
+  labels:
+    app: rating-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rating-management
+  template:
+    metadata:
+      labels:
+        app: rating-management
+    spec:
+      containers:
+        - name: rating-management
+          image: username/rating-management:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-management
+  labels:
+    app: app-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-management
+  template:
+    metadata:
+      labels:
+        app: app-management
+    spec:
+      containers:
+        - name: app-management
+          image: username/app-management:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-management
+  labels:
+    app: order-management
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: order-management
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: food-preparation
+  labels:
+    app: food-preparation
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: food-preparation
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: delivery-management
+  labels:
+    app: delivery-management
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: delivery-management
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rating-management
+  labels:
+    app: rating-management
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: rating-management
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-management
+  labels:
+    app: app-management
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: app-management
+

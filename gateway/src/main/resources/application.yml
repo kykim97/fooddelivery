@@ -1,0 +1,92 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+#<<< API Gateway / Routes
+      routes:
+        - id: order-management
+          uri: http://localhost:8082
+          predicates:
+            - Path=/orders/**, 
+        - id: food-preparation
+          uri: http://localhost:8083
+          predicates:
+            - Path=/restaurants/**, 
+        - id: delivery-management
+          uri: http://localhost:8084
+          predicates:
+            - Path=/deliveries/**, 
+        - id: rating-management
+          uri: http://localhost:8085
+          predicates:
+            - Path=/ratings/**, 
+        - id: app-management
+          uri: http://localhost:8086
+          predicates:
+            - Path=/apps/**, 
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+#>>> API Gateway / Routes
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: order-management
+          uri: http://orderManagement:8080
+          predicates:
+            - Path=/orders/**, 
+        - id: food-preparation
+          uri: http://foodPreparation:8080
+          predicates:
+            - Path=/restaurants/**, 
+        - id: delivery-management
+          uri: http://deliveryManagement:8080
+          predicates:
+            - Path=/deliveries/**, 
+        - id: rating-management
+          uri: http://ratingManagement:8080
+          predicates:
+            - Path=/ratings/**, 
+        - id: app-management
+          uri: http://appManagement:8080
+          predicates:
+            - Path=/apps/**, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
